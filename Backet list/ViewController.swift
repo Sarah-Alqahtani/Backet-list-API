@@ -2,40 +2,81 @@
 //  ViewController.swift
 //  Backet list
 //
-//  Created by admin on 16/12/2021.
+//  Created by admin on 27/12/2021.
 //
 
 import UIKit
 
 
 class ViewController: UITableViewController, cancelbtn{
-    func savebtn(by controller: UIViewController,with text:String,at indexpath:NSIndexPath?) {
-       
-        if let saveEdit = indexpath
-        {
-            ArrName[saveEdit.row] = text
-        } else
-        {
-            ArrName.append(text)
-        }
-        
-        tableView.reloadData()
-        dismiss(animated: true, completion: nil)
-    }
-    
     func cancelbtn(by controller: UIViewController) {
         dismiss(animated: true, completion: nil)
     }
-
     
-  var ArrName=["JOli","Reem","Adim","Mark","Norah","Amal","Maha","Sleem","Seed","Abduallah","Jaki","Hamad"]
-
-        
-        override func viewDidLoad() {
+    
+    var ArrName:[Task]=[]
+    
+    func savebtn(by controller: UIViewController,with text:String,at indexpath:NSIndexPath?) {
+        if let index = indexpath {
+                    updateTask(index.row,text)
+                }else{
+                    addTask(text)
+                }
+                dismiss(animated: true, completion: nil)
+    }
+    func addTask(_ text:String){
+           TaskModel.addTask(objective: text, completionHandler: {
+               data, response, error in
+               do{
+                   let result = try JSONDecoder().decode([Task].self, from: data!)
+                   
+                   DispatchQueue.main.async {
+                       self.ArrName = result
+                       self.tableView.reloadData()
+                   }
+               }catch{
+                   print(error)
+               }
+           })
+       }
+       
+       func updateTask(_ index:Int,_ text:String){
+           TaskModel.updateTask(index: index, objective: text, completionHandler: {
+               data, response, error in
+               do{
+                   let result = try JSONDecoder().decode([Task].self, from: data!)
+                   
+                   DispatchQueue.main.async {
+                       self.ArrName = result
+                       self.tableView.reloadData()
+                   }
+               }catch{
+                   print(error)
+               }
+           })}
+    
+    
+    override func viewDidLoad() {
             super.viewDidLoad()
-        
+            
+            TaskModel.getAllTasks(completionHandler: {
+                data, response, error in
+                
+                do{
+                    self.ArrName = try JSONDecoder().decode([Task].self, from: data!)
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }catch{
+                    print(error)
+                }
+            })
+            
+            
         }
-    
+            
+                                  
+                                  
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -46,17 +87,26 @@ class ViewController: UITableViewController, cancelbtn{
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
                      let cell=tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-                         cell.textLabel?.text=ArrName[indexPath.row]
+                         cell.textLabel?.text=ArrName[indexPath.row].objective
         return cell
     }
+        //////////////////////////////////////////////////////// ///////////////        ///////////////// ///               /////////////////// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-         
-                self.ArrName.remove(at: indexPath.row)
-                self.tableView.deleteRows(at: [indexPath], with: .automatic)
-            
-           }
-    }
+                 TaskModel.deleteTask(index: ArrName[indexPath.row].id, completionHandler: {
+                                                    data, response, error in
+                                                    do{
+                                                        let result = try JSONDecoder().decode([Task].self, from: data!)
+                                                        
+                                                        DispatchQueue.main.async {
+                                                            self.ArrName = result
+                                                            self.tableView.reloadData()
+                                                        }
+                                                    }catch{
+                                                        print(error)
+                                                    }
+                                                    
+                                                })
+            }
     
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         performSegue(withIdentifier: "editcell", sender: indexPath)
@@ -76,12 +126,12 @@ class ViewController: UITableViewController, cancelbtn{
 
             controller.delegate = self
                         let indexPath = sender as! NSIndexPath
-                        let editing=ArrName[indexPath.row]
+            let editing=ArrName[indexPath.row].objective
             controller.edittext=editing
             controller.indexPath=indexPath
         } }
     
     }
-
+                                  
 
     

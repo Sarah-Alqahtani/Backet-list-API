@@ -15,6 +15,8 @@
 		8410E658276B7FC4003FB52F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8410E656276B7FC4003FB52F /* LaunchScreen.storyboard */; };
 		8410E662276BC77C003FB52F /* SecondTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8410E661276BC77C003FB52F /* SecondTableViewController.swift */; };
 		8410E664276BC9F7003FB52F /* cancelbtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8410E663276BC9F7003FB52F /* cancelbtn.swift */; };
+		84C8EB9A277A6B49003801D8 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C8EB99277A6B49003801D8 /* API.swift */; };
+		84C8EB9C277A7370003801D8 /* CodableTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C8EB9B277A7370003801D8 /* CodableTask.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		8410E659276B7FC4003FB52F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8410E661276BC77C003FB52F /* SecondTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondTableViewController.swift; sourceTree = "<group>"; };
 		8410E663276BC9F7003FB52F /* cancelbtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cancelbtn.swift; sourceTree = "<group>"; };
+		84C8EB99277A6B49003801D8 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		84C8EB9B277A7370003801D8 /* CodableTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableTask.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,12 +67,14 @@
 				8410E64B276B7FC3003FB52F /* AppDelegate.swift */,
 				8410E64D276B7FC3003FB52F /* SceneDelegate.swift */,
 				8410E64F276B7FC3003FB52F /* ViewController.swift */,
+				84C8EB99277A6B49003801D8 /* API.swift */,
 				8410E651276B7FC3003FB52F /* Main.storyboard */,
 				8410E654276B7FC4003FB52F /* Assets.xcassets */,
 				8410E656276B7FC4003FB52F /* LaunchScreen.storyboard */,
 				8410E659276B7FC4003FB52F /* Info.plist */,
 				8410E661276BC77C003FB52F /* SecondTableViewController.swift */,
 				8410E663276BC9F7003FB52F /* cancelbtn.swift */,
+				84C8EB9B277A7370003801D8 /* CodableTask.swift */,
 			);
 			path = "Backet list";
 			sourceTree = "<group>";
@@ -144,10 +150,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84C8EB9C277A7370003801D8 /* CodableTask.swift in Sources */,
 				8410E650276B7FC3003FB52F /* ViewController.swift in Sources */,
 				8410E662276BC77C003FB52F /* SecondTableViewController.swift in Sources */,
 				8410E64C276B7FC3003FB52F /* AppDelegate.swift in Sources */,
 				8410E64E276B7FC3003FB52F /* SceneDelegate.swift in Sources */,
+				84C8EB9A277A6B49003801D8 /* API.swift in Sources */,
 				8410E664276BC9F7003FB52F /* cancelbtn.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
