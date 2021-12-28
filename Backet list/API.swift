@@ -35,7 +35,7 @@ class TaskModel {
        
        static func updateTask(index:Int,objective:String,completionHandler: @escaping(_ data: Data?, _ response:URLResponse?, _ error:Error?) -> Void){
            var request = URLRequest(url: URL(string: "https://saudibucketlistapi.herokuapp.com/tasks/\(index)")!)
-           request.httpMethod = "PATCH"
+           request.httpMethod = "PUT"
            let bodyObj = ["objective": objective]
            do{
                request.httpBody = try JSONSerialization.data(withJSONObject: bodyObj)

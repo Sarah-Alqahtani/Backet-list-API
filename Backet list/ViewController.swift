@@ -13,17 +13,25 @@ class ViewController: UITableViewController, cancelbtn{
         dismiss(animated: true, completion: nil)
     }
     
-    
-    var ArrName:[Task]=[]
+    var obj : Task?
+    var ArrName:[Task]=[] // array of objects [(id, objective,created_at), (id,objective,createdat)]
     
     func savebtn(by controller: UIViewController,with text:String,at indexpath:NSIndexPath?) {
-        if let index = indexpath {
-                    updateTask(index.row,text)
-                }else{
+       
+       
+       if let index = indexpath {
+    
+      //     updateTask(indexpath,text)
+                }
+           else
+           {
                     addTask(text)
                 }
-                dismiss(animated: true, completion: nil)
-    }
+        dismiss(animated: true, completion: nil)
+        }
+               
+    
+
     func addTask(_ text:String){
            TaskModel.addTask(objective: text, completionHandler: {
                data, response, error in
@@ -41,39 +49,55 @@ class ViewController: UITableViewController, cancelbtn{
        }
        
        func updateTask(_ index:Int,_ text:String){
+           
            TaskModel.updateTask(index: index, objective: text, completionHandler: {
                data, response, error in
-               do{
-                   let result = try JSONDecoder().decode([Task].self, from: data!)
+               if error != nil {
+                   print("not updated")
                    
+               }else {
+               do{
+                   
+                   self.getData()
+                   // let result = try JSONDecoder().decode([Task].self, from: data!)
+                  // TaskModel.getAllTasks(completionHandler: <#T##(Data?, URLResponse?, Error?) -> Void##(Data?, URLResponse?, Error?) -> Void##(_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void#>)
                    DispatchQueue.main.async {
-                       self.ArrName = result
-                       self.tableView.reloadData()
+                     //  self.ArrName = result
+                     //  self.tableView.reloadData()
                    }
                }catch{
                    print(error)
                }
+           }
            })}
     
     
     override func viewDidLoad() {
             super.viewDidLoad()
-            
-            TaskModel.getAllTasks(completionHandler: {
-                data, response, error in
-                
-                do{
-                    self.ArrName = try JSONDecoder().decode([Task].self, from: data!)
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                }catch{
-                    print(error)
-                }
-            })
+        getData()
+  
             
             
         }
+    func getData(){
+        TaskModel.getAllTasks(completionHandler: {
+            data, response, error in
+            if error != nil {
+                print(error?.localizedDescription)
+                print("did not get data")
+            }
+            else {
+            do{
+                self.ArrName = try JSONDecoder().decode([Task].self, from: data!)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }catch{
+                print(error)
+            }
+        }}
+        )
+    }
             
                                   
                                   
@@ -129,6 +153,7 @@ class ViewController: UITableViewController, cancelbtn{
             let editing=ArrName[indexPath.row].objective
             controller.edittext=editing
             controller.indexPath=indexPath
+            
         } }
     
     }
